@@ -370,16 +370,6 @@ ConstantValue SimpleSCCPAnalysis::getConstantValue(const Value &Value) {
   return ConstantValue::top();
 }
 
-/**
- * Fold constants with analysis result.
- *
- * While removing or RAUW (Replace All Uses With) dangling instructions of
- * constants, one should be cautious with `br` and `phi` instructions.
- * If the condition of the branch instruction is replaced with a constant,
- * then the branch should be changed into unconditional branch.
- * By dropping branch path, a destination block may no longer be reachable.
- * Thus, one should also manage the dangling incoming block at phi nodes.
- */
 bool SimpleSCCPTransform::foldConstants(Function &F,
                                         AnalysisResultTy &DataflowFacts) {
   bool madeChange = false;
